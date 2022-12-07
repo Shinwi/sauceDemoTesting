@@ -35,6 +35,8 @@ public class HomePage {
 
     public Optional<String> getLoginError() { return getErrorMessage(loginError);}
 
+    public String getCurrentPageUrl() { return driver.getCurrentUrl(); }
+
     private Optional<String> getErrorMessage(By loginErrorLocator) {
         Optional<WebElement> error = getError(loginErrorLocator);
         if (error.isPresent()) {
