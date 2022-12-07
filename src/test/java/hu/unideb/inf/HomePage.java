@@ -1,6 +1,8 @@
 package hu.unideb.inf;
 
+import io.cucumber.java.sl.In;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +18,11 @@ public class HomePage {
     @FindBy(id = "login-button")
     private WebElement loginButton;
 
+    @FindBy(id = "add-to-cart-sauce-labs-backpack")
+    private WebElement addBackpackToCartButton;
+    @FindBy(id = "add-to-cart-sauce-labs-bike-light")
+    private WebElement addBikeLightToCartButton;
+
     private static final By loginError = By.xpath("//*[@id=\"login_button_container\"]/div/form/div[3]/h3");
 
     public HomePage(WebDriver driver) {
@@ -29,13 +36,47 @@ public class HomePage {
 
     public void clickLoginButton() { loginButton.click();}
 
+    public void addOneItemToCart() {
+        addBackpackToCartButton.click();
+    }
+
+    public void addTwoItemsToCart() {
+        addBackpackToCartButton.click();
+        addBikeLightToCartButton.click();
+    }
+
+    public int getNumberShownOnCart() {
+            return Integer.parseInt(driver.findElement(By.className("shopping_cart_badge")).getText());
+    }
+
     public void fillField(String field, String value) { getField(By.id(field)).sendKeys(value); }
 
     public WebElement getField(By locator) { return driver.findElement(locator); }
 
+    // find the element in the page by classname
+    public WebElement getFieldByClassName(String className) {
+        return driver.findElement(By.className(className));
+    }
+
+    // takes a class, find the element of that class, and clicks it
+    public void clickButtonByClassName(String className) {
+        driver.findElement(By.className(className)).click();
+    }
+
     public Optional<String> getLoginError() { return getErrorMessage(loginError);}
 
     public String getCurrentPageUrl() { return driver.getCurrentUrl(); }
+
+    // focuses on the new opened tab, copies its url, then close the tab and go back to original one
+    public String getNewTabUrl() {
+        driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "2");
+        String pageUrl = driver.getCurrentUrl();
+        System.out.println("ada");
+        System.out.println(pageUrl);
+        driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "w");
+        // driver.switchTo()
+        return pageUrl;
+    }
 
     private Optional<String> getErrorMessage(By loginErrorLocator) {
         Optional<WebElement> error = getError(loginErrorLocator);

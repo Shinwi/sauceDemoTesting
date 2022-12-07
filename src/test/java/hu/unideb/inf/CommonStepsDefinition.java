@@ -10,6 +10,11 @@ public class CommonStepsDefinition extends AbstractStepsDef{
         homePage.openPage();
     }
 
+    @And("correct credentials are entered")
+    public void correctCredentialsEntered() {
+        homePage.fillField("user-name", "standard_user");
+        homePage.fillField("password", "secret_sauce");
+    }
     @When("the login button is clicked")
     public void theLoginButtonIsClicked() {
         homePage.clickLoginButton();
