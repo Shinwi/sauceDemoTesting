@@ -10,12 +10,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.fail;
 
 public class addOneItemToCartStepDefinition extends AbstractStepsDef{
-    /*
-    * Scenario: Adding one item to shopping cart
-    Given we are in the inventory page
-    When add to cart button is clicked in one item
-    Then the cart icon shows 1
-    * */
+
     @Given("we are in the inventory page")
     public void currentPageIsInvetoryPage() {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -31,11 +26,6 @@ public class addOneItemToCartStepDefinition extends AbstractStepsDef{
     public void addOneItemToCart() {
         homePage.addOneItemToCart();
     }
-
-    /*@When("add to cart button is clicked on two items")
-    public void addTwoItemsToCart() {
-        homePage.addTwoItemsToCart();
-    }*/
 
     @Then("the cart icon shows {string}")
     public void cartIconShowsNumber(String stringNumber) {

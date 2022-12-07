@@ -20,8 +20,12 @@ public class HomePage {
 
     @FindBy(id = "add-to-cart-sauce-labs-backpack")
     private WebElement addBackpackToCartButton;
+    @FindBy(id = "remove-sauce-labs-backpack")
+    private WebElement removeBackPackFromCartButton;
     @FindBy(id = "add-to-cart-sauce-labs-bike-light")
     private WebElement addBikeLightToCartButton;
+    @FindBy(id = "remove-sauce-labs-bike-light")
+    private WebElement removeBikeLightFromCartButton;
 
     private static final By loginError = By.xpath("//*[@id=\"login_button_container\"]/div/form/div[3]/h3");
 
@@ -45,8 +49,19 @@ public class HomePage {
         addBikeLightToCartButton.click();
     }
 
+    public void removeOneItemFromCart() { removeBackPackFromCartButton.click(); }
+
+    public void removeTwoItemsFromCart() {
+        removeBackPackFromCartButton.click();
+        removeBikeLightFromCartButton.click();
+    }
+
     public int getNumberShownOnCart() {
+        if (driver.findElements(By.className("shopping_cart_badge")).size() > 0) {
             return Integer.parseInt(driver.findElement(By.className("shopping_cart_badge")).getText());
+        } else {
+            return 0;
+        }
     }
 
     public void fillField(String field, String value) { getField(By.id(field)).sendKeys(value); }
