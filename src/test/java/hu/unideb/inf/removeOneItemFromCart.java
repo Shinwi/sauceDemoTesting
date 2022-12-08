@@ -10,6 +10,7 @@ public class removeOneItemFromCart extends AbstractStepsDef{
 
     @And("the cart has two items")
     public void cartHasTwoItems() {
+        homePage.removeTwoItemsFromCart();
         homePage.addTwoItemsToCart();
         int numberShownOnCart = homePage.getNumberShownOnCart();
 

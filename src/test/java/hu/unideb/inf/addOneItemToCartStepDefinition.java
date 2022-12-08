@@ -31,6 +31,8 @@ public class addOneItemToCartStepDefinition extends AbstractStepsDef{
     public void cartIconShowsNumber(String stringNumber) {
         int number = Integer.parseInt(stringNumber);
         int numberShownOnCart = homePage.getNumberShownOnCart();
+        System.out.println("numberShownOnCart");
+        System.out.println(numberShownOnCart);
 
         if (number == numberShownOnCart) {
             Assert.assertTrue(true);

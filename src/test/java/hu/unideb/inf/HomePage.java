@@ -8,9 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public class HomePage {
     private static final String PageURL = "https://www.saucedemo.com/";
@@ -52,12 +54,21 @@ public class HomePage {
 
     public void removeOneItemFromCart() { removeBackPackFromCartButton.click(); }
 
+    public void removeSauceLabsBikeLight() { removeBikeLightFromCartButton.click(); }
     public void removeTwoItemsFromCart() {
         removeBackPackFromCartButton.click();
         removeBikeLightFromCartButton.click();
+        /*
+        if (driver.findElements(By.id("remove-sauce-labs-backpack")).size() > 0) {
+            removeBackPackFromCartButton.click();
+        }
+        else if (driver.findElements(By.id("remove-sauce-labs-bike-light")).size() > 0) {
+            removeBikeLightFromCartButton.click();
+        } */
     }
 
     public int getNumberShownOnCart() {
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         if (driver.findElements(By.className("shopping_cart_badge")).size() > 0) {
             return Integer.parseInt(driver.findElement(By.className("shopping_cart_badge")).getText());
         } else {
@@ -77,8 +88,6 @@ public class HomePage {
     // takes a class, find the element of that class, and clicks it
     public String clickButtonByClassName(String className) {
         driver.findElement(By.className(className)).click();
-        // go to new page and get url
-        // driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL+ "t");
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         String openedTabUrl =  driver.getCurrentUrl();

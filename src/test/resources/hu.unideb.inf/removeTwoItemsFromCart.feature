@@ -9,4 +9,4 @@ Feature: Remove two items form cart when it has two
     Given we are in the inventory page
     And the cart has one item
     When remove button is clicked on one item
-    Then the cart icon shows no number
+    Then the cart icon shows '1'
