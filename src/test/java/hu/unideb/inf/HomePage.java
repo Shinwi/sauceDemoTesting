@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,8 +75,16 @@ public class HomePage {
     }
 
     // takes a class, find the element of that class, and clicks it
-    public void clickButtonByClassName(String className) {
+    public String clickButtonByClassName(String className) {
         driver.findElement(By.className(className)).click();
+        // go to new page and get url
+        // driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL+ "t");
+        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs2.get(1));
+        String openedTabUrl =  driver.getCurrentUrl();
+        driver.close();
+        driver.switchTo().window(tabs2.get(0));
+        return openedTabUrl;
     }
 
     public Optional<String> getLoginError() { return getErrorMessage(loginError);}

@@ -4,18 +4,14 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
+
 
 import static org.junit.Assert.fail;
 
 public class SocialLinksStepDefinition extends AbstractStepsDef{
-    /*
-    * Given the '<socialIcon>' exists in the page
-    And the '<socialIcon>' is clicked
-    Then the opened page url is equal to '<newPageUrl>'
-    * */
+    String openedPageUrl;
+
     @Given("the {string} exists in the page")
     public void doesSocialIconExist(String socialIconClassName) {
         try {
@@ -28,9 +24,20 @@ public class SocialLinksStepDefinition extends AbstractStepsDef{
 
     @And("the {string} icon is clicked")
     public void clickSocialIcon(String socialIconClassName) {
-        homePage.clickButtonByClassName(socialIconClassName);
-        String dino = homePage.getNewTabUrl();
-        System.out.println(dino);
+        openedPageUrl = homePage.clickButtonByClassName(socialIconClassName);
+        System.out.println(openedPageUrl);
     }
-    // @Then("the opened page url is equal to {string}")
+
+    @Then("the opened page url is equal to {string}")
+    public void newPageUrl(String newPageUrl) {
+        // OpenedPageUrl  equal newPageUrl?
+        if (openedPageUrl.contains("linkedin.com") && openedPageUrl.contains("sauce-labs")) {
+            Assert.assertTrue(true);
+        }
+        else if (openedPageUrl.equals(newPageUrl)) {
+            Assert.assertTrue(true);
+        } else {
+            fail();
+        }
+    }
 }
